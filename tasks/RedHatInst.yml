@@ -1,5 +1,6 @@
 - name: Install OpenJDK
   yum: name=java-1.7.0-openjdk state=present
+  when: java_version | version_compare('1.7.0', '<')
 
 - name: Change ownership on monasca download directory.
   file: path="{{monasca_download_dir}}" state=directory owner=zookeeper group=zookeeper recurse=yes

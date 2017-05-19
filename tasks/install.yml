@@ -1,4 +1,13 @@
 ---
+
+- name: Register current java version
+  shell: java -version 2>&1 | grep version | awk '{print $3}' | sed 's/"//g'
+  register: java_version_command
+  changed_when: False
+
+- set_fact:
+    java_version: "{{ '0.0.0' if java_version_command.stdout == '' else  java_version_command.stdout }}"
+
 - include: DebianInst.yml
   when: "ansible_os_family == 'Debian'"
 
